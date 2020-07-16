@@ -38,7 +38,7 @@ There are no right or wrong solutions, and a complete solution is not needed to 
 - Time limit - 30 minutes
 
 ## Objective:
-The candidate's is supposed to use the project's boiler plate to create a functioning application. </br>
+The candidate is supposed to use the project's boilerplate to create a functioning application. </br>
 The application is supposed to display and collect information about people.</br>
 There are three main purposes of the application:
 - Display information about persons
