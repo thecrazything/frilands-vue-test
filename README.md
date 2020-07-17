@@ -44,9 +44,10 @@ There are three main purposes of the application:
 - Display information about persons
   - Name
   - Date of birth
-  - Social security number
+  - Age
   - Profession
   - Country of recidency
+  - Favorite quote
 - Save information mentioned above for new persons
 - Remove persons from the list
 
@@ -54,4 +55,24 @@ The objectives for the candidate is to present their skills in Vue, including:
 - Components
 - Vuex Store
 - Reusability
+
+The candidate is allowed to change the structure of the application, such as:
+- Add or remove:
+  -  Components
+  -  Pre-defined markup
+  -  Existing data in the state
+  -  Styling
+- Change name of:
+  - Components
+  - Modules
+
+The candidate is not allowed to add dependencies to the project
+
+## Evaluation
+The candidate will be evaluated on several parts within the test, including:
+- Completion of the objective
+- Method of completion
+- Code style and structure
+- Duscussion after completion
+
 
