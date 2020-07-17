@@ -1,21 +1,18 @@
 <template>
-  <div>
+  <div class="mt-10">
     <add-user />
-    <buttons />
     <user-list />
   </div>
 </template>
 
 <script>
 import AddUser from './components/AddUser.vue'
-import Buttons from './components/Buttons.vue'
 import UserList from './components/UserList.vue'
 
 export default {
   name: 'App',
   components: {
     AddUser,
-    Buttons,
     UserList,
   },
 }
