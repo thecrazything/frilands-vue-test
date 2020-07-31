@@ -12,6 +12,7 @@
           id="grid-first-name"
           type="text"
           placeholder="Enter First Name"
+          v-model="firstName"
         >
       </div>
       <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -25,6 +26,7 @@
           id="grid-last-name"
           type="text"
           placeholder="Enter Last Name"
+          v-model="firstName"
         >
       </div>
       <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -37,6 +39,7 @@
           class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
           id="grid-date"
           type="date"
+          v-model="birthDate"
         >
       </div>
       <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -50,6 +53,7 @@
           id="grid-quote"
           type="text"
           placeholder="Enter Quote"
+          v-model="quote"
         >
       </div>
       <drop-down
@@ -66,12 +70,22 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import DropDown from './DropDown';
 import ButtonComponent from './Button';
 
 export default {
   name: 'AddUser',
+  data() {
+    return {
+      user: {
+        firstName: '',
+        lastName: '',
+        birthDate: null,
+        quote: '',
+      },
+    };
+  },
   components: {
     DropDown,
     ButtonComponent,
@@ -85,6 +99,12 @@ export default {
     ...mapMutations({
       setProfession: 'SET_PROFESSION',
     }),
+    ...mapActions([
+      'addNewUsers',
+    ]),
+    addUser() {
+      this.addNewUser(this.user);
+    }
   },
 }
 </script>
