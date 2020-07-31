@@ -52,7 +52,10 @@
           placeholder="Enter Quote"
         >
       </div>
-      <drop-down />
+      <drop-down
+        :options="professions"
+        :changeSelect="selectProfession"
+      />
       <drop-down />
     </div>
     <button-component
@@ -63,7 +66,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import DropDown from './DropDown';
 import ButtonComponent from './Button';
 
@@ -76,6 +79,11 @@ export default {
   computed: {
     ...mapState({
       professions: state => state.professionModule.professions,
+    }),
+  },
+  methods: {
+    ...mapMutations({
+      setProfession: 'SET_PROFESSION',
     }),
   },
 }

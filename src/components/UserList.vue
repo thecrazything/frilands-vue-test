@@ -31,30 +31,33 @@
       />
     </thead>
     <tbody>
-      <tr>
+      <tr
+        v-for="(user, key) in users"
+        :key="key"
+      >
         <td
           class="border px-4 py-2"
-          v-text="users[0].firstName + ' ' + users[0].lastName"
+          v-text="user.firstName + ' ' + user.lastName"
         />
         <td
           class="border px-4 py-2"
-          v-text="users[0].birthDate"
+          v-text="user.birthDate"
         />
         <td
           class="border px-4 py-2"
-          v-text="''"
+          v-text="userAge(user)"
         />
         <td
           class="border px-4 py-2"
-          v-text="users[0].profession_id"
+          v-text="user.profession_id"
         />
         <td
           class="border px-4 py-2"
-          v-text="users[0].country_id"
+          v-text="user.country_id"
         />
         <td
           class="border px-4 py-2"
-          v-text="users[0].quote"
+          v-text="user.quote"
         />
         <td
           class="px-4 py-2"
@@ -72,7 +75,7 @@
 
 <script>
 // import User from './User';
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import ButtonComponent from './Button.vue';
 
 export default {
@@ -88,7 +91,24 @@ export default {
   computed: {
     ...mapState({
         users: state => state.userModule.users,
+        professions: state => state.professionModule.professions,
     }),
+  },
+  methods: {
+    ...mapActions([
+      'removeUser',
+    ]),
+    removeRow(user) {
+      this.removeUser(user);
+    },
+    userAge(user) {
+      const birthDate = user.birthDate;
+      const todaysDate = Date.now();
+      const birthDateInMilliseconds = (new Date(birthDate)).getTime();
+      const ageInMilliSeconds;
+      const age = (new Date()).getUTCFullYear() - 1970;
+      return age;
+    },
   },
 }
 </script>

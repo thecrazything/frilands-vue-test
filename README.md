@@ -73,6 +73,6 @@ The candidate will be evaluated on several parts within the test, including:
 - Completion of the objective
 - Method of completion
 - Code style and structure
-- Duscussion after completion
+- Discussion after completion
 
 

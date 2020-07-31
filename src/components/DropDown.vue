@@ -5,22 +5,18 @@
       v-text="label"
     />
     <div class="relative">
-      <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
-      <option
+      <select
+        id="grid-state"
+        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        @change="changeSelect($event.target.value)"
+      >
+        <option
           :value="options[0].value"
           v-text="options[0].text"
         />
         <option
           :value="options[1].value"
           v-text="options[1].text"
-        />
-        <option
-          :value="options[2].value"
-          v-text="options[2].text"
-        />
-        <option
-          :value="options[3].value"
-          v-text="options[3].text"
         />
       </select>
       <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -39,13 +35,15 @@ export default {
       default: () => [
         { value: 1, text: 'Option 1' },
         { value: 2, text: 'Option 2' },
-        { value: 3, text: 'Option 3' },
-        { value: 4, text: 'Option 4' },
       ],
     },
     label: {
       type: String,
       default: 'Label',
+    },
+    changeSelect: {
+      type: Function,
+      defualt: () => {},
     },
   },
 }
