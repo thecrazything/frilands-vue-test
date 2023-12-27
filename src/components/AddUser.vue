@@ -1,66 +1,20 @@
 <template>
   <form class="md:w-8/12 mx-auto my-10">
     <div class="flex flex-wrap -mx-3 mb-6">
-      <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <label
-          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-          for="grid-first-name"
-          v-text="'First Name'"
-        />
-        <input
-          class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-          id="grid-first-name"
-          type="text"
-          placeholder="Enter First Name"
-          v-model="firstName"
-        >
-      </div>
-      <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <label
-          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-          for="grid-last-name"
-          v-text="'Last Name'"
-        />
-        <input
-          class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-          id="grid-last-name"
-          type="text"
-          placeholder="Enter Last Name"
-          v-model="firstName"
-        >
-      </div>
-      <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <label
-          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-          for="grid-date"
-          v-text="'Date of Birth'"
-        />
-        <input
-          class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-          id="grid-date"
-          type="date"
-          v-model="birthDate"
-        >
-      </div>
-      <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <label
-          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-          for="grid-quote"
-          v-text="'Favorite Quote'"
-        />
-        <input
-          class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-          id="grid-quote"
-          type="text"
-          placeholder="Enter Quote"
-          v-model="quote"
-        >
-      </div>
+      <ValidatedInput label="First Name" v-model="user.firstName" placeholder="Enter First Name" :errors="errors"></ValidatedInput>
+      <ValidatedInput label="Last Name" v-model="user.lastName" placeholder="Enter Last Name" :errors="errors"></ValidatedInput>
+      <ValidatedInput label="Date of Birth" v-model="user.birthDate" placeholder="" type="date" :errors="errors"></ValidatedInput>
+      <ValidatedInput label="Favorite Quote" v-model="user.quote" placeholder="Enter Quote" :errors="errors"></ValidatedInput>
       <drop-down
+        label="Profession"
         :options="professions"
-        :changeSelect="selectProfession"
+        v-model="user.profession_id"
       />
-      <drop-down />
+      <drop-down
+        label="Country"
+        :options="countries"
+        v-model="user.country_id"
+      />
     </div>
     <button-component
       :on-click="addUser"
@@ -70,40 +24,56 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import DropDown from './DropDown';
 import ButtonComponent from './Button';
+import { emptyUser } from '../utils/utils'
+import ValidatedInput from './ValidatedInput.vue';
 
 export default {
   name: 'AddUser',
   data() {
     return {
-      user: {
-        firstName: '',
-        lastName: '',
-        birthDate: null,
-        quote: '',
-      },
+      user: emptyUser(),
+      errors: []
     };
   },
   components: {
     DropDown,
     ButtonComponent,
-  },
+    ValidatedInput
+},
   computed: {
     ...mapState({
       professions: state => state.professionModule.professions,
+      countries: state => state.countryModule.countries
     }),
   },
   methods: {
-    ...mapMutations({
-      setProfession: 'SET_PROFESSION',
-    }),
     ...mapActions([
-      'addNewUsers',
+      'addNewUser',
     ]),
+    validate() {
+      this.errors = []
+      if (!this.user.firstName || this.user.firstName.trim() === "") {
+        this.errors.push("First Name")
+      }
+      if (!this.user.lastName || this.user.lastName.trim() === "") {
+        this.errors.push("Last Name")
+      }
+      if (!this.user.birthDate || this.user.birthDate.trim() === "") {
+        this.errors.push("Date of Birth")
+      }
+      if (!this.user.quote || this.user.quote.trim() === "") {
+        this.errors.push("Favorite Quote")
+      }
+      return this.errors.length === 0
+    },
     addUser() {
-      this.addNewUser(this.user);
+      if (this.validate()) {
+        this.addNewUser(this.user);
+        this.user = emptyUser()
+      }
     }
   },
 }

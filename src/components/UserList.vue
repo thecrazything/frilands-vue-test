@@ -47,14 +47,12 @@
           class="border px-4 py-2"
           v-text="userAge(user)"
         />
-        <td
-          class="border px-4 py-2"
-          v-text="user.profession_id"
-        />
-        <td
-          class="border px-4 py-2"
-          v-text="user.country_id"
-        />
+        <td class="border px-4 py-2">
+          <TranslatedValue :value="user.profession_id" :map="professions"></TranslatedValue>
+        </td>
+        <td class="border px-4 py-2">
+          <TranslatedValue :value="user.country_id" :map="countries"></TranslatedValue>
+        </td>
         <td
           class="border px-4 py-2"
           v-text="user.quote"
@@ -74,15 +72,16 @@
 </template>
 
 <script>
-// import User from './User';
 import { mapState, mapActions } from 'vuex'
 import ButtonComponent from './Button.vue';
+import TranslatedValue from './TranslatedValue.vue';
 
 export default {
   name: 'UserList',
   components: {
     ButtonComponent,
-  },
+    TranslatedValue
+},
   data() {
     return {
       selected: []
@@ -92,6 +91,7 @@ export default {
     ...mapState({
         users: state => state.userModule.users,
         professions: state => state.professionModule.professions,
+        countries: state => state.countryModule.countries
     }),
   },
   methods: {
@@ -105,8 +105,8 @@ export default {
       const birthDate = user.birthDate;
       const todaysDate = Date.now();
       const birthDateInMilliseconds = (new Date(birthDate)).getTime();
-      const ageInMilliSeconds;
-      const age = (new Date()).getUTCFullYear() - 1970;
+      const ageInMilliSeconds = todaysDate - birthDateInMilliseconds;
+      const age = Math.floor(ageInMilliSeconds / 1000 / 3600 / 24 / 365);
       return age;
     },
   },
